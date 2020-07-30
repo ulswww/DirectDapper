@@ -1,7 +1,4 @@
-﻿using System.Data.Common;
-using System.Diagnostics;
-
-namespace DirectDapper.Sqls
+﻿namespace DirectDapper.Sqls
 {
     public interface ISqlFileProvider
     {
@@ -22,21 +19,6 @@ namespace DirectDapper.Sqls
         IPageSqlQueryAdapter GetPageSqlQueryAdapter(string pagePath, params string[] exSubPaths);
 
         void SetSqlConext(SqlContext conext);
-    }
-
-    public class SqlContext
-    {
-        private readonly DbConnection connection;
-        private readonly DbTransaction transaction;
-
-        public SqlContext(DbConnection connection, DbTransaction transaction)
-        {
-            Debug.Assert(connection==null, $"SqlContext必须设置Connection");
-
-            this.connection = connection;
-
-            this.transaction = transaction;
-        }
     }
 
 }
