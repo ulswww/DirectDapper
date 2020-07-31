@@ -1,2 +1,3 @@
-# DirectDapper
-A Simple, Direct Dapper
+#
+DirectDapper可以使开发人员简单直接的在项目中写SQL语句，学习曲线近乎为零。
+没有linq，没有xml，没有复杂的理念，没有深奥的理论。
