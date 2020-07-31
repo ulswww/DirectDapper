@@ -11,17 +11,14 @@ namespace DirectDapper.Sqls
     public class SqlFileProvider : ISqlFileProvider
     {
         private readonly IResourceManager _resourceManager;
-        private readonly ISqlQueryFactory _sqlQueryFactory;
         private const string SubExtension = "s";
-        private SqlContext context;
-        private ISqlQuery query;
 
         private IDictionary<string, string> sqlDict = new Dictionary<string, string>();
 
-        public SqlFileProvider(IResourceManager resourceManager, ISqlQueryFactory sqlQueryFactory)
+        public SqlFileProvider(IResourceManager resourceManager)
         {
             this._resourceManager = resourceManager;
-            this._sqlQueryFactory = sqlQueryFactory;
+   
         }
         public string GetSql(string key)
         {
@@ -145,90 +142,6 @@ namespace DirectDapper.Sqls
             return "/" + key + ".sql";
         }
 
-        public PageSql GetPageSql(string pagePath, params string[] exSubPaths)
-        {
-            var prefix = pagePath.EndsWith(".") ? "" : "_";
-
-            var resultsKey = pagePath + prefix + "AllResults.s";
-            var pageKey = pagePath + prefix + "Page.s";
-            var countKey = pagePath + prefix + "Count.s";
-
-            var resultSql = GetSql(resultsKey);
-            var pageSql = GetSql(pageKey);
-            var countSql = GetSql(countKey);
-
-            if (string.IsNullOrWhiteSpace(resultSql))
-            {
-                throw new System.ArgumentException($"{resultsKey} can not found!", nameof(resultSql));
-            }
-
-            if (string.IsNullOrWhiteSpace(pageSql))
-            {
-                throw new System.ArgumentException($"{pageKey} can not found!", nameof(pageSql));
-            }
-
-            if (string.IsNullOrWhiteSpace(countSql))
-            {
-                throw new System.ArgumentException($"{countKey} can not found!", nameof(countSql));
-            }
-
-            var subSqlDict = new Dictionary<string, string>();
-            
-            foreach (var sqlKey in exSubPaths)
-            {
-                var subsqlPath = pagePath + prefix + sqlKey + ".s";
-                var subSql = GetSql(countKey);
-
-                if (string.IsNullOrWhiteSpace(subSql))
-                {
-                    throw new System.ArgumentException($"{sqlKey} can not found!", nameof(sqlKey));
-                }
-
-                subSqlDict.Add(sqlKey, subSql);
-            }
-
-            return new PageSql(resultSql, countSql, pageSql, subSqlDict);
-        }
-
-        public SimpleSql GetSimpleSql(string key)
-        {
-            var sql = GetSql(key);
-            return new SimpleSql(sql);
-        }
-        public IPageSqlQueryAdapter GetPageSqlQueryAdapter(string pagePath, params string[] exSubPaths)
-        {
-            InitQuery();
-
-            var pageSql = GetPageSql(pagePath, exSubPaths);
-
-            return new PageSqlQueryAdapter(pageSql, query);
-        }
-
-        private void InitQuery()
-        {
-            query = query ?? _sqlQueryFactory.Create(context);
-        }
-
-        public ISimpleSqlQueryAdapter GetSimpleSqlAdapter(string key)
-        {
-            InitQuery();
-
-            var pageSql = GetSimpleSql(key);
-
-            return new SimpleSqlQueryAdapter(pageSql, query);
-        }
-
-        public void SetSqlConext(SqlContext context)
-        {
-            if (this.context != null)
-            {
-                this.context = context;
-            }
-            else
-            {
-                this.context = null;
-            }
-        }
     }
 
 }
