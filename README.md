@@ -1,2 +1,2 @@
 # DirectDapper
-An Simple, Direct Dapper
+A Simple, Direct Dapper
