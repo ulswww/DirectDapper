@@ -16,6 +16,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<ISqlQueryFactory,DefaultSqlQueryFactory>();
             services.AddTransient<ISqlQueryProvider,SqlQueryProvider>();
 
+            services.AddSingleton<IQueryHelper,DefaultQueryHelper>();
+
             var resourceConfiguration = new ResourcesConfiguration();
 
             var options = new DirectDapperInitOptions(resourceConfiguration);
