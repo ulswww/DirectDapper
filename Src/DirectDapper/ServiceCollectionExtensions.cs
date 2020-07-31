@@ -10,13 +10,15 @@ namespace Microsoft.Extensions.DependencyInjection
         public static void AddDirectDapper(this IServiceCollection services,Action<DirectDapperInitOptions> optionAction)
         {
             services.AddSingleton<IResourceManager,ResourceManager>();
-            services.AddSingleton<IResourcesConfiguration,ResourcesConfiguration>();
+           
            
             services.AddSingleton<ISqlFileProvider,SqlFileProvider>();
             services.AddTransient<ISqlQueryFactory,DefaultSqlQueryFactory>();
             services.AddTransient<ISqlQueryProvider,SqlQueryProvider>();
 
-            var options = new DirectDapperInitOptions();
+            var resourceConfiguration = new ResourcesConfiguration();
+
+            var options = new DirectDapperInitOptions(resourceConfiguration);
 
             optionAction?.Invoke(options);
 
@@ -24,6 +26,10 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 initAction?.Invoke(services);
             }
+
+            var sources = options.Sources;
+
+            services.AddSingleton<IResourcesConfiguration,ResourcesConfiguration>((s)=>resourceConfiguration);
         }
     }
 }
