@@ -27,6 +27,7 @@ namespace DirectDapper.Resources.Files
                   var filePath =  ResourcePathHelper.NormalizePath(relativePath.Replace(Path.DirectorySeparatorChar,'/'));
 
                     resources[filePath] = new FileResourceItem(
+                        Id,
                         filename,
                         filePath,
                         File.ReadAllBytes(filename)

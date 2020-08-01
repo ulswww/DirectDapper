@@ -14,7 +14,7 @@ namespace DirectDapper.Resources.Embedded
         /// </summary>
         public Assembly Assembly { get; set; }
 
-        internal EmbeddedResourceItem(string fileName, byte[] content, Assembly assembly):base(fileName,content)
+        internal EmbeddedResourceItem(string setId,string fileName, byte[] content, Assembly assembly):base(setId,fileName,content)
         {
 
             Assembly = assembly;

@@ -4,6 +4,8 @@ namespace DirectDapper.Resources
 {
     public abstract  class ResourceItem
     {
+        public string SetId { get; }
+
         /// <summary>
         /// File name including extension.
         /// </summary>
@@ -18,8 +20,9 @@ namespace DirectDapper.Resources
 
         public DateTime LastModifiedUtc { get; protected set;}
 
-        internal ResourceItem(string fileName, byte[] content)
+        internal ResourceItem(string setId,string fileName, byte[] content)
         {
+            SetId = setId;
             FileName = fileName;
             Content = content;
             FileExtension = CalculateFileExtension(FileName);

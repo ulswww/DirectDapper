@@ -30,6 +30,7 @@ namespace DirectDapper.Resources.Embedded
                     var filePath = ResourcePathHelper.NormalizePath(RootPath) + relativePath;
 
                     resources[filePath] = new EmbeddedResourceItem(
+                        Id,
                         filePath,
                         stream.GetAllBytes(),
                         Assembly
