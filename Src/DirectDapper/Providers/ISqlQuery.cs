@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DirectDapper.Sqls
+namespace DirectDapper.Providers
 {
     public interface ISqlQuery
     {

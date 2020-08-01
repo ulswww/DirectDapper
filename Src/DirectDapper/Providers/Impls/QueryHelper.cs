@@ -1,7 +1,7 @@
 using System.Linq;
 using DirectDapper.Extensions;
 
-namespace DirectDapper.Sqls
+namespace DirectDapper.Providers
 {
     /// <summary>
     /// 默认方言是postgre

@@ -1,4 +1,4 @@
-﻿namespace DirectDapper.Sqls
+﻿namespace DirectDapper.Providers
 {
     public interface ISqlFileProvider
     {

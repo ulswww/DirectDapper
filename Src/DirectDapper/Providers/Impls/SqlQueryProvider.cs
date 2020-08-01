@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Data.Common;
 
-namespace DirectDapper.Sqls
+namespace DirectDapper.Providers
 {
     public class SqlQueryProvider : ISqlQueryProvider
     {
         
-        private SqlContext context;
+        private DirectDapperConnection connection;
         private ISqlQuery query;
         private readonly ISqlFileProvider _sqlFileProvider;
         private readonly ISqlQueryFactory _sqlQueryFactory;
@@ -81,7 +82,7 @@ namespace DirectDapper.Sqls
 
         private void InitQuery()
         {
-            query = query ?? _sqlQueryFactory.Create(context);
+            query = query ?? _sqlQueryFactory.Create(connection);
         }
 
         public ISimpleSqlQueryAdapter GetSimpleSqlAdapter(string key)
@@ -93,18 +94,23 @@ namespace DirectDapper.Sqls
             return new SimpleSqlQueryAdapter(pageSql, query);
         }
 
-        public ISqlQueryProvider SetSqlConext(SqlContext context)
+        private ISqlQueryProvider SetConnection(DirectDapperConnection context)
         {
-            if (this.context != null)
+            if (this.connection != null)
             {
-                this.context = context;
+                this.connection = context;
             }
             else
             {
-                this.context = null;
+                this.connection = null;
             }
 
             return this;
+        }
+
+        public ISqlQueryProvider SetConnection(DbConnection connection, DbTransaction transaction)
+        {
+            return SetConnection(new DirectDapperConnection(connection,transaction));
         }
     }
 }

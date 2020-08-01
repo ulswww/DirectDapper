@@ -1,4 +1,6 @@
-namespace DirectDapper.Sqls
+using System.Data.Common;
+
+namespace DirectDapper.Providers
 {
     public interface ISqlQueryProvider
     {
@@ -16,7 +18,7 @@ namespace DirectDapper.Sqls
         /// <returns></returns>
         IPageSqlQueryAdapter GetPageSqlQueryAdapter(string pagePath, params string[] exSubPaths);
 
-        ISqlQueryProvider SetSqlConext(SqlContext conext);
+        ISqlQueryProvider SetConnection(DbConnection connection, DbTransaction transaction);
 
         IQueryHelper Helper{get;}
     }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DirectDapper.Sqls
+namespace DirectDapper.Providers
 {
     public class PageSqlQueryAdapter : IPageSqlQueryAdapter
     {
@@ -50,7 +50,7 @@ namespace DirectDapper.Sqls
             return this;
         }
 
-        public IPageSqlQueryAdapter SetQueryObj(dynamic searcheObj)
+        public IPageSqlQueryAdapter SetQueryObj(object searcheObj)
         {
             pageSql.SetQueryObj(searcheObj);
             return this;

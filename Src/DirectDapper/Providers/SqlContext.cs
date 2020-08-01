@@ -1,14 +1,14 @@
 using System.Data.Common;
 using System.Diagnostics;
 
-namespace DirectDapper.Sqls
+namespace DirectDapper.Providers
 {
-    public class SqlContext
+    public class DirectDapperConnection
     {
         public  DbConnection Connection{get;}
         public  DbTransaction Transaction {get;}
 
-        public SqlContext(DbConnection connection, DbTransaction transaction)
+        public DirectDapperConnection(DbConnection connection, DbTransaction transaction)
         {
             Debug.Assert(connection==null, $"SqlContext必须设置Connection");
 

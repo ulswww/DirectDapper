@@ -1,7 +1,7 @@
 using System;
 using DirectDapper;
 using DirectDapper.Resources;
-using DirectDapper.Sqls;
+using DirectDapper.Providers;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -10,12 +10,9 @@ namespace Microsoft.Extensions.DependencyInjection
         public static void AddDirectDapper(this IServiceCollection services,Action<DirectDapperInitOptions> optionAction)
         {
             services.AddSingleton<IResourceManager,ResourceManager>();
-           
-           
             services.AddSingleton<ISqlFileProvider,SqlFileProvider>();
             services.AddTransient<ISqlQueryFactory,DefaultSqlQueryFactory>();
             services.AddTransient<ISqlQueryProvider,SqlQueryProvider>();
-
             services.AddSingleton<IQueryHelper,DefaultQueryHelper>();
 
             var resourceConfiguration = new ResourcesConfiguration();

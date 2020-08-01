@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DirectDapper.Sqls
+namespace DirectDapper.Providers
 {
 
     public interface IPageSqlQueryAdapter
     {
         IPageSqlQueryAdapter ReplaceSearchStr(string key, string searchStr);
 
-        IPageSqlQueryAdapter SetQueryObj(dynamic searcheObj);
+        IPageSqlQueryAdapter SetQueryObj(object searcheObj);
 
         string TotalCountFullSql { get; }
         string PageFullSql { get; }

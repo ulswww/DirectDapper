@@ -1,10 +1,10 @@
 using System;
 
-namespace DirectDapper.Sqls
+namespace DirectDapper.Providers
 {
     public class DefaultSqlQueryFactory : ISqlQueryFactory
     {
-        public ISqlQuery Create(SqlContext context)
+        public ISqlQuery Create(DirectDapperConnection context)
         {
             if (context == null)
                 return new DefaultSqlQuery(context);

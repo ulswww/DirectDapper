@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace DirectDapper.Sqls
+namespace DirectDapper.Providers
 {
     public interface IQueryHelper
     {

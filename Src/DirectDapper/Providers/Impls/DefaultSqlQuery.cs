@@ -5,13 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 
-namespace DirectDapper.Sqls
+namespace DirectDapper.Providers
 {
     public class DefaultSqlQuery : ISqlQuery
     {
-        private readonly SqlContext _context;
+        private readonly DirectDapperConnection _context;
 
-        public DefaultSqlQuery(SqlContext context)
+        public DefaultSqlQuery(DirectDapperConnection context)
         {
             this._context = context;
         }

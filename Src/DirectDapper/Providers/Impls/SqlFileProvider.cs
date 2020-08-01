@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using DirectDapper.Resources;
 
-namespace DirectDapper.Sqls
+namespace DirectDapper.Providers
 {
     public class SqlFileProvider : ISqlFileProvider
     {

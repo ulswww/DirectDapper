@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DirectDapper.Sqls
+namespace DirectDapper.Providers
 {
     public class SimpleSqlQueryAdapter : ISimpleSqlQueryAdapter
     {
@@ -36,7 +36,7 @@ namespace DirectDapper.Sqls
             return this;
         }
 
-        public ISimpleSqlQueryAdapter SetQueryObj(dynamic searcheObj)
+        public ISimpleSqlQueryAdapter SetQueryObj(object searcheObj)
         {
             simpleSql.SetQueryObj(searcheObj);
 
