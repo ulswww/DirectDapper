@@ -5,21 +5,14 @@ namespace DirectDapper.Resources
 {
     public abstract class ResourceSet
     {
-        public string RootPath { get; }
+        public string RootPath { get; protected set;}
 
-        public string ResourceNamespace { get; }
-
-        public ResourceSet(string rootPath, string resourceNamespace)
+        public ResourceSet(string rootPath)
         {
             RootPath = rootPath.EnsureEndsWith('/');
-
-            ResourceNamespace = resourceNamespace;
         }
 
         internal abstract void AddResources(Dictionary<string, ResourceItem> resources);
-        protected string ConvertToRelativePath(string resourceName)
-        {
-            return resourceName.Substring(ResourceNamespace.Length + 1);
-        }
+ 
     }
 }

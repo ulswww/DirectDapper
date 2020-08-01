@@ -1,9 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Common;
 
 namespace DirectDapper.Providers
 {
-    public class SqlQueryProvider : ISqlQueryProvider
+    public class DirectDapperQueryProvider : IDirectDapperQueryProvider
     {
         
         private DirectDapperConnection connection;
@@ -12,7 +12,7 @@ namespace DirectDapper.Providers
         private readonly ISqlQueryFactory _sqlQueryFactory;
 
 
-        public SqlQueryProvider(ISqlFileProvider sqlFileProvider,ISqlQueryFactory sqlQueryFactory,IQueryHelper queryHelper)
+        public DirectDapperQueryProvider(ISqlFileProvider sqlFileProvider,ISqlQueryFactory sqlQueryFactory,IQueryHelper queryHelper)
         {
             this._sqlFileProvider = sqlFileProvider;
             this._sqlQueryFactory = sqlQueryFactory;
@@ -71,7 +71,7 @@ namespace DirectDapper.Providers
             var sql = _sqlFileProvider.GetSql(key);
             return new SimpleSql(sql);
         }
-        public IPageSqlQueryAdapter GetPageSqlQueryAdapter(string pagePath, params string[] exSubPaths)
+        public IPageSqlQueryAdapter GetPageQueryAdapter(string pagePath, params string[] exSubPaths)
         {
             InitQuery();
 
@@ -85,7 +85,7 @@ namespace DirectDapper.Providers
             query = query ?? _sqlQueryFactory.Create(connection);
         }
 
-        public ISimpleSqlQueryAdapter GetSimpleSqlAdapter(string key)
+        public ISimpleSqlQueryAdapter GetSimpleQueryAdapter(string key)
         {
             InitQuery();
 
@@ -94,7 +94,7 @@ namespace DirectDapper.Providers
             return new SimpleSqlQueryAdapter(pageSql, query);
         }
 
-        private ISqlQueryProvider SetConnection(DirectDapperConnection context)
+        private IDirectDapperQueryProvider SetConnection(DirectDapperConnection context)
         {
             if (this.connection != null)
             {
@@ -108,7 +108,7 @@ namespace DirectDapper.Providers
             return this;
         }
 
-        public ISqlQueryProvider SetConnection(DbConnection connection, DbTransaction transaction)
+        public IDirectDapperQueryProvider SetConnection(DbConnection connection, DbTransaction transaction)
         {
             return SetConnection(new DirectDapperConnection(connection,transaction));
         }

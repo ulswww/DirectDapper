@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IResourceManager,ResourceManager>();
             services.AddSingleton<ISqlFileProvider,SqlFileProvider>();
             services.AddTransient<ISqlQueryFactory,DefaultSqlQueryFactory>();
-            services.AddTransient<ISqlQueryProvider,SqlQueryProvider>();
+            services.AddTransient<IDirectDapperQueryProvider,DirectDapperQueryProvider>();
             services.AddSingleton<IQueryHelper,DefaultQueryHelper>();
 
             var resourceConfiguration = new ResourcesConfiguration();

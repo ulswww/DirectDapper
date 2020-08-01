@@ -7,7 +7,7 @@ namespace DirectDapper.Resources
     {
         public static string NormalizePath(string fullPath)
         {
-            return fullPath?.Replace("/", ".").TrimStart('.');
+            return fullPath?.Replace("/", ".")?.Replace("\\",".").TrimStart('.');
         }
 
         public static string EncodeAsResourcesPath(string subPath)

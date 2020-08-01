@@ -7,10 +7,12 @@ namespace DirectDapper.Resources.Embedded
     public class EmbeddedResourceSet:ResourceSet
     {
         public Assembly Assembly { get; }
-
-        public EmbeddedResourceSet(string rootPath, Assembly assembly, string resourceNamespace):base(rootPath,resourceNamespace)
+        public string ResourceNamespace { get; }
+        public EmbeddedResourceSet(string rootPath, Assembly assembly, string resourceNamespace):base(rootPath)
         {
             Assembly = assembly;
+
+            ResourceNamespace = resourceNamespace;
         }
 
         internal override void AddResources(Dictionary<string, ResourceItem> resources)
@@ -34,6 +36,10 @@ namespace DirectDapper.Resources.Embedded
                     );
                 }
             }
+        }       
+        private string ConvertToRelativePath(string resourceName)
+        {
+            return resourceName.Substring(ResourceNamespace.Length + 1);
         }
     }
 }
