@@ -6,23 +6,22 @@ namespace DirectDapper.Resources.Files
 {
     public class FileResourceSet : ResourceSet
     {
-        private readonly string _parentPath;
-        public FileResourceSet(string parentPath, string rootPath) : base(rootPath)
+        private readonly string _physicalPath;
+        public FileResourceSet(string rootPath,string physicalPath) : base(rootPath)
         {
-            this._parentPath = parentPath.EnsureEndsWith(Path.DirectorySeparatorChar);
+            this._physicalPath = physicalPath.EnsureEndsWith(Path.DirectorySeparatorChar);
 
              RootPath = rootPath.Trim('/').Trim('\\').EnsureEndsWith(Path.DirectorySeparatorChar);
         }
 
         internal override void AddResources(Dictionary<string, ResourceItem> resources)
         {
-            var path = Path.Combine(_parentPath,RootPath);
 
-            var files = Directory.GetFiles(path,"*.*",SearchOption.AllDirectories);
+            var files = Directory.GetFiles(_physicalPath,"*.*",SearchOption.AllDirectories);
 
             foreach (var filename in files)
             {
-                 var relativePath = GetRelativePath(_parentPath,filename);
+                 var relativePath =  RootPath + GetRelativePath(_physicalPath,filename);
 
                   var filePath =  ResourcePathHelper.NormalizePath(relativePath.Replace(Path.DirectorySeparatorChar,'/'));
 

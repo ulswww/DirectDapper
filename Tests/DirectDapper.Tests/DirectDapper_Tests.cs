@@ -18,8 +18,8 @@ namespace DirectDapper.Tests
 
             services.AddDirectDapper(options =>
             {
-                options.Sources.Add(new EmbeddedResourceSet("Sqls", this.GetType().Assembly, "DirectDapper.Tests.Sqls"));
-                options.Sources.Add(new FileResourceSet(AppDomain.CurrentDomain.BaseDirectory,"Sqls"));
+               // options.Sources.Add(new EmbeddedResourceSet("Sqls", this.GetType().Assembly, "DirectDapper.Tests.Sqls"));
+                options.Sources.Add(new FileResourceSet("Sqls",AppDomain.CurrentDomain.BaseDirectory+"Sqls"));
             });
 
             var serviceProvider = services.BuildServiceProvider();
