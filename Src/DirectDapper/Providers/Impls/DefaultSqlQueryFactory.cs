@@ -6,7 +6,7 @@ namespace DirectDapper.Providers
     {
         public ISqlQuery Create(DirectDapperConnection context)
         {
-            if (context == null)
+            if (context != null)
                 return new DefaultSqlQuery(context);
 
             throw new ArgumentNullException("SqlContext is null");
