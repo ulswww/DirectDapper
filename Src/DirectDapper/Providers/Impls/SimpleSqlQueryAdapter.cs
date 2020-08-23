@@ -24,7 +24,7 @@ namespace DirectDapper.Providers
            return simpleSql.GetResultAsync<T>(sqlQuery);
         }
 
-        public Task<List<T>> GetResultsAsync<T>()
+        public Task<List<T>> GetListAsync<T>()
         {
            return simpleSql.GetResultsAsync<T>(sqlQuery);
         }

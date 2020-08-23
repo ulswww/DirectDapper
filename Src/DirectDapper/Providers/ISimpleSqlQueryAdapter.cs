@@ -5,7 +5,7 @@ namespace DirectDapper.Providers
 {
     public interface ISimpleSqlQueryAdapter
     {
-        Task<List<T>> GetResultsAsync<T>();
+        Task<List<T>> GetListAsync<T>();
         Task<T> GetResultAsync<T>();
         Task ExecuteAsync();
         ISimpleSqlQueryAdapter SetQueryObj(object searcheObj);

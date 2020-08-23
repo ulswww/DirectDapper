@@ -27,7 +27,8 @@ namespace DirectDapper.Tests
 
             var adapter =  serviceProvider.GetRequiredService<IDirectDapperQueryProvider>()
                                             .SetConnection(new SqliteConnection(), null)
-                                            .GetSimpleQueryAdapter("Sqls.Hello.GetWorld.s")
+                                            .GetSimpleQueryAdapter("Sqls.Hello.GetWorld2.s")
+                                            .GetResultAsync
                                             ;
         }
 

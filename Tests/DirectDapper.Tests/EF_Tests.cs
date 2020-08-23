@@ -31,7 +31,7 @@ namespace DirectDapper.Tests
                                             //    .SetAbpEfConnectionProvider<SupportDbContext>()
                                                .GetSimpleQueryAdapter("Sqls.Hello.GetWorld2.s")
                                               // .SetQueryObj(new { })
-                                               .GetResultsAsync<Ticket>();
+                                               .GetListAsync<Ticket>();
                 s.Count.ShouldBe(2);
             }
         }
