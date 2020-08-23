@@ -13,7 +13,7 @@ namespace DirectDapper.Abp.SqlQueries
 
         public ISqlQuery Create(DirectDapperConnection context)
         {
-            if (context == null)
+            if (context != null)
                 return new DefaultSqlQuery(context);
                 
             return _iocManager.Resolve<ISqlQuery>();

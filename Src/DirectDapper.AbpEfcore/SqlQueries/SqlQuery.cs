@@ -10,7 +10,11 @@ using DirectDapper.Providers;
 
 namespace DirectDapper.Abp.SqlQueries
 {
-    public class SqlQuery<TDbContext> : AbpEfCoreQueryBase<TDbContext>, ISqlQuery, ITransientDependency
+    public interface ISqlQuery<TDbContext>:ISqlQuery where TDbContext : DbContext 
+    {
+        
+    }
+    public class SqlQuery<TDbContext> : AbpEfCoreQueryBase<TDbContext>, ISqlQuery<TDbContext>, ITransientDependency
           where TDbContext : DbContext 
     {
         public SqlQuery(IDbContextProvider<TDbContext> dbContextProvider, IActiveTransactionProvider transactionProvider) : base(dbContextProvider, transactionProvider)

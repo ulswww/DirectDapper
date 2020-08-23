@@ -20,7 +20,8 @@ namespace DirectDapper.Abp.SqlQueries
         {
             _dbContextProvider = dbContextProvider;
             _transactionProvider = transactionProvider;
-
+            
+            var c = Context;
         }
 
         public virtual TDbContext Context => _dbContextProvider.GetDbContext(MultiTenancySides.Tenant);

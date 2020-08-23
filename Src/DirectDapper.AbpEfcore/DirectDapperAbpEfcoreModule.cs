@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Abp.Dependency;
 using Abp.EntityFrameworkCore;
@@ -24,6 +25,8 @@ namespace DirectDapper.Abp
             IocManager.Register<IQueryHelper, DefaultQueryHelper>(DependencyLifeStyle.Singleton);
             IocManager.Register<IResourcesConfiguration, ResourcesConfiguration>(DependencyLifeStyle.Singleton);
         }
+
+        public List<ResourceSet> Sources => IocManager.Resolve<IResourcesConfiguration>().Sources;
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
