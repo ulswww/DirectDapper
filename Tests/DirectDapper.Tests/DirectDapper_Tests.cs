@@ -4,6 +4,7 @@ using DirectDapper.Providers;
 using DirectDapper.Resources;
 using DirectDapper.Resources.Embedded;
 using DirectDapper.Resources.Files;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -18,15 +19,16 @@ namespace DirectDapper.Tests
 
             services.AddDirectDapper(options =>
             {
-               // options.Sources.Add(new EmbeddedResourceSet("Sqls", this.GetType().Assembly, "DirectDapper.Tests.Sqls"));
-                options.Sources.Add(new FileResourceSet("Sqls",AppDomain.CurrentDomain.BaseDirectory+"Sqls"));
+                options.Sources.Add(new EmbeddedResourceSet("Sqls", this.GetType().Assembly, "DirectDapper.Tests.Sqls"));
+               // options.Sources.Add(new FileResourceSet("Sqls",AppDomain.CurrentDomain.BaseDirectory+"Sqls"));
             });
 
             var serviceProvider = services.BuildServiceProvider();
 
             var adapter =  serviceProvider.GetRequiredService<IDirectDapperQueryProvider>()
-                                            .SetConnection(null, null)
-                                            .GetSimpleQueryAdapter("Sqls.Hello.GetWorld.s");
+                                            .SetConnection(new SqliteConnection(), null)
+                                            .GetSimpleQueryAdapter("Sqls.Hello.GetWorld.s")
+                                            ;
         }
 
 

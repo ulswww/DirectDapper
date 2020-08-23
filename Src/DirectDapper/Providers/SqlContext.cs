@@ -1,3 +1,4 @@
+using System;
 using System.Data.Common;
 using System.Diagnostics;
 
@@ -10,7 +11,8 @@ namespace DirectDapper.Providers
 
         public DirectDapperConnection(DbConnection connection, DbTransaction transaction)
         {
-            Debug.Assert(connection!=null, $"SqlContext必须设置Connection");
+            if(connection == null)
+              throw new ArgumentException($"SqlContext必须设置Connection");
 
             this.Connection = connection;
 
