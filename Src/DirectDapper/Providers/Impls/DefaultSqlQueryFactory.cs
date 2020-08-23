@@ -4,10 +4,10 @@ namespace DirectDapper.Providers
 {
     public class DefaultSqlQueryFactory : ISqlQueryFactory
     {
-        public ISqlQuery Create(DirectDapperConnection context)
+        public ISqlQuery Create(IDirectDapperConnectionProvider connectionProvider)
         {
-            if (context != null)
-                return new DefaultSqlQuery(context);
+            if (connectionProvider != null)
+                return new DefaultSqlQuery(connectionProvider);
 
             throw new ArgumentNullException("SqlContext is null");
         }

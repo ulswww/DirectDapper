@@ -1,8 +1,11 @@
 using System.Threading.Tasks;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
+using DirectDapper.AbpEfcore;
+using DirectDapper.AbpEfcore.SqlQueries;
 using DirectDapper.Providers;
 using DirectDapper.Tests.Domain;
+using DirectDapper.Tests.EF;
 using Shouldly;
 using Xunit;
 
@@ -22,10 +25,10 @@ namespace DirectDapper.Tests
 
                 await  unitOfWork.Current.SaveChangesAsync();
 
-                var adapter =  Resolve<IDirectDapperQueryProvider>()
-                                               .GetSimpleQueryAdapter("Sqls.Hello.GetWorld2.s"); 
-
+        
                 var s = await Resolve<IDirectDapperQueryProvider>()
+                                                .SetAbpEfConnectionProvider("1")
+                                            //    .SetAbpEfConnectionProvider<SupportDbContext>()
                                                .GetSimpleQueryAdapter("Sqls.Hello.GetWorld2.s")
                                                .SetQueryObj(new { })
                                                .GetResultsAsync<Ticket>();

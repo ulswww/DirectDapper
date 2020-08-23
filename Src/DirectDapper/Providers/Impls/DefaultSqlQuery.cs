@@ -9,11 +9,11 @@ namespace DirectDapper.Providers
 {
     public class DefaultSqlQuery : ISqlQuery
     {
-        private readonly DirectDapperConnection _context;
+        private readonly IDirectDapperConnectionProvider _connectionProvider;
 
-        public DefaultSqlQuery(DirectDapperConnection context)
+        public DefaultSqlQuery(IDirectDapperConnectionProvider connectionProvider)
         {
-            this._context = context;
+            this._connectionProvider = connectionProvider;
         }
 
         class Q
@@ -84,13 +84,13 @@ namespace DirectDapper.Providers
         }
 
         
-        protected async Task<TResult> TryTransactionAsync<TResult>(Func<DbConnection, DbTransaction, Task<TResult>> action)
+        protected  Task<TResult> TryTransactionAsync<TResult>(Func<DbConnection, DbTransaction, Task<TResult>> action)
         {
-            return await action(_context.Connection, _context.Transaction);
+            return _connectionProvider.ApplyAsync(conn=>action(conn.Connection, conn.Transaction));
         }
         protected TResult TryTransaction<TResult>(Func<DbConnection, DbTransaction, TResult> action)
         {
-            return action(_context.Connection, _context.Transaction);
+            return _connectionProvider.Apply(conn=>action(conn.Connection, conn.Transaction));
         }
     }
 }

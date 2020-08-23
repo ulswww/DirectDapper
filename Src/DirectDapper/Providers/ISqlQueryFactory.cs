@@ -4,7 +4,7 @@ namespace DirectDapper.Providers
 {
     public interface ISqlQueryFactory
     {
-        ISqlQuery Create(DirectDapperConnection context);
+        ISqlQuery Create(IDirectDapperConnectionProvider context);
     }
 
 

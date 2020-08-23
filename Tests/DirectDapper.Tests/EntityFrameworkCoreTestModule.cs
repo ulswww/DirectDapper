@@ -42,9 +42,6 @@ namespace Abp.EntityFrameworkCore.Tests
 
             //Custom repository
 
-            dapperAbpEfCoreModule.RegisterDirectDapperSqlQuery<SupportDbContext>();
-
-
             // options.Sources.Add(new EmbeddedResourceSet("Sqls", this.GetType().Assembly, "DirectDapper.Tests.Sqls"));
             dapperAbpEfCoreModule.Sources.Add(new FileResourceSet("Sqls", AppDomain.CurrentDomain.BaseDirectory + "Sqls"));
 
@@ -58,6 +55,8 @@ namespace Abp.EntityFrameworkCore.Tests
             IocManager.RegisterAssemblyByConvention(typeof(EntityFrameworkCoreTestModule).GetAssembly());
 
             RegisterSupportDbContextToInMemoryDb(IocManager);
+
+            this.dapperAbpEfCoreModule.RegisterDbContext<SupportDbContext>("1");
 
         }
 

@@ -6,6 +6,7 @@ using Abp.EntityFrameworkCore;
 using Abp.Modules;
 using Castle.MicroKernel.Registration;
 using DirectDapper.Abp.SqlQueries;
+using DirectDapper.AbpEfcore.SqlQueries;
 using DirectDapper.Providers;
 using DirectDapper.Resources;
 using Microsoft.EntityFrameworkCore;
@@ -20,24 +21,35 @@ namespace DirectDapper.Abp
         {
             IocManager.Register<IResourceManager, ResourceManager>(DependencyLifeStyle.Singleton);
             IocManager.Register<ISqlFileProvider, SqlFileProvider>(DependencyLifeStyle.Singleton);
-            IocManager.Register<ISqlQueryFactory, AbpSqlQueryFactory>();
-            IocManager.Register<IDirectDapperQueryProvider, DirectDapperQueryProvider>();
             IocManager.Register<IQueryHelper, DefaultQueryHelper>(DependencyLifeStyle.Singleton);
             IocManager.Register<IResourcesConfiguration, ResourcesConfiguration>(DependencyLifeStyle.Singleton);
+            IocManager.Register<ISqlQueryFactory,DefaultSqlQueryFactory>();
+            IocManager.Register<IDirectDapperQueryProvider, AbpDirectDapperQueryProvider>();
+            IocManager.Register<IConnectionProviderTypeProvider, ConnectionProviderTypeProvider>(DependencyLifeStyle.Singleton);
         }
+
+
 
         public List<ResourceSet> Sources => IocManager.Resolve<IResourcesConfiguration>().Sources;
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
 
+
+            
+            IocManager.IocContainer.Register(
+                    Component.For(typeof(IAbpEfDirectDapperConnectionProvider<>))
+                              .ImplementedBy(typeof(AbpEfDirectDapperConnectionProvider<>)).LifestyleSingleton().IsDefault()
+                );
+
         }
 
-        public void RegisterDirectDapperSqlQuery<TDbContext>() where TDbContext : DbContext
+        public void RegisterDbContext<TDbContext>(string key) where TDbContext:DbContext
         {
-            IocManager.Register<ISqlQuery, SqlQuery<TDbContext>>();
-        }
+            var registion = IocManager.Resolve<IConnectionProviderTypeProvider>();
 
+            registion.Register<TDbContext>(key);
+        }
         public void OverrideQueryHelper<TQueryHelper>() where TQueryHelper : IQueryHelper
         {
             IocManager.IocContainer.Register(

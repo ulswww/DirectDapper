@@ -5,11 +5,11 @@ namespace DirectDapper.Providers
 {
     public class DirectDapperQueryProvider : IDirectDapperQueryProvider
     {
-        
-        private DirectDapperConnection connection;
         private ISqlQuery query;
         private readonly ISqlFileProvider _sqlFileProvider;
-        private readonly ISqlQueryFactory _sqlQueryFactory;
+        private  ISqlQueryFactory _sqlQueryFactory;
+
+        private IDirectDapperConnectionProvider _connectionProvider;
 
 
         public DirectDapperQueryProvider(ISqlFileProvider sqlFileProvider,ISqlQueryFactory sqlQueryFactory,IQueryHelper queryHelper)
@@ -82,7 +82,7 @@ namespace DirectDapper.Providers
 
         private void InitQuery()
         {
-            query = query ?? _sqlQueryFactory.Create(connection);
+            query = query ?? _sqlQueryFactory.Create(_connectionProvider);
         }
 
         public ISimpleSqlQueryAdapter GetSimpleQueryAdapter(string key)
@@ -96,14 +96,7 @@ namespace DirectDapper.Providers
 
         private IDirectDapperQueryProvider SetConnection(DirectDapperConnection context)
         {
-            if (this.connection != null)
-            {
-                this.connection = context;
-            }
-            else
-            {
-                this.connection = null;
-            }
+            _connectionProvider = new DefaultDirectDapperConnectionProvider(context);
 
             return this;
         }
@@ -111,6 +104,20 @@ namespace DirectDapper.Providers
         public IDirectDapperQueryProvider SetConnection(DbConnection connection, DbTransaction transaction)
         {
             return SetConnection(new DirectDapperConnection(connection,transaction));
+        }
+
+        public IDirectDapperQueryProvider SetQueryFactory(ISqlQueryFactory factory)
+        {
+            _sqlQueryFactory = factory;
+
+            return this;
+        }
+
+        public IDirectDapperQueryProvider SetConnectionProvider(IDirectDapperConnectionProvider provider)
+        {
+            _connectionProvider = provider;
+
+            return this;
         }
     }
 }

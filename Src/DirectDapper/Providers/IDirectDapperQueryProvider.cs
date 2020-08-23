@@ -20,6 +20,9 @@ namespace DirectDapper.Providers
 
         IDirectDapperQueryProvider SetConnection(DbConnection connection, DbTransaction transaction);
 
+        IDirectDapperQueryProvider SetConnectionProvider(IDirectDapperConnectionProvider provider);
+        IDirectDapperQueryProvider SetQueryFactory(ISqlQueryFactory factory);
+
         IQueryHelper Helper{get;}
     }
 }

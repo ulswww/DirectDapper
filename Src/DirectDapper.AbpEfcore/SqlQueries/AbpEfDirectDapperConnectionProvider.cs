@@ -6,21 +6,28 @@ using Abp.Data;
 using Abp.Dependency;
 using Abp.EntityFrameworkCore;
 using Abp.MultiTenancy;
+using DirectDapper.Providers;
 using Microsoft.EntityFrameworkCore;
 
 namespace DirectDapper.Abp.SqlQueries
 {
-    public abstract class AbpEfCoreQueryBase<TDbContext> : ITransientDependency where TDbContext : DbContext
+    public interface IAbpEfDirectDapperConnectionProvider<TDbContext> : IDirectDapperConnectionProvider
+        where TDbContext : DbContext
+    {
+
+    }
+    public  class AbpEfDirectDapperConnectionProvider<TDbContext> : IAbpEfDirectDapperConnectionProvider<TDbContext>, ITransientDependency
+        where TDbContext : DbContext
     {
         private IDbContextProvider<TDbContext> _dbContextProvider;
         private IActiveTransactionProvider _transactionProvider;
 
 
-        public AbpEfCoreQueryBase(IDbContextProvider<TDbContext> dbContextProvider, IActiveTransactionProvider transactionProvider)
+        public AbpEfDirectDapperConnectionProvider(IDbContextProvider<TDbContext> dbContextProvider, IActiveTransactionProvider transactionProvider)
         {
             _dbContextProvider = dbContextProvider;
             _transactionProvider = transactionProvider;
-            
+
             var c = Context;
         }
 
@@ -67,5 +74,14 @@ namespace DirectDapper.Abp.SqlQueries
             });
         }
 
+        public TResult Apply<TResult>(Func<DirectDapperConnection, TResult> action)
+        {
+            return TryTransaction((conn, tran) => action(new DirectDapperConnection(conn, tran)));
+        }
+
+        public Task<TResult> ApplyAsync<TResult>(Func<DirectDapperConnection, Task<TResult>> action)
+        {
+            return TryTransactionAsync((conn, tran) => action(new DirectDapperConnection(conn, tran)));
+        }
     }
 }

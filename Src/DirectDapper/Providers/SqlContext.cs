@@ -10,7 +10,7 @@ namespace DirectDapper.Providers
 
         public DirectDapperConnection(DbConnection connection, DbTransaction transaction)
         {
-            Debug.Assert(connection==null, $"SqlContext必须设置Connection");
+            Debug.Assert(connection!=null, $"SqlContext必须设置Connection");
 
             this.Connection = connection;
 
