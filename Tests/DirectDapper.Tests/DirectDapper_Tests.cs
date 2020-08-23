@@ -4,6 +4,7 @@ using DirectDapper.Providers;
 using DirectDapper.Resources;
 using DirectDapper.Resources.Embedded;
 using DirectDapper.Resources.Files;
+using DirectDapper.Tests.Domain;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -28,7 +29,7 @@ namespace DirectDapper.Tests
             var adapter =  serviceProvider.GetRequiredService<IDirectDapperQueryProvider>()
                                             .SetConnection(new SqliteConnection(), null)
                                             .GetSimpleQueryAdapter("Sqls.Hello.GetWorld2.s")
-                                            .GetResultAsync
+                                            .GetListAsync<Ticket>()
                                             ;
         }
 
